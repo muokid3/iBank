@@ -23,6 +23,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("String","BASE_URL", "\"https://api.escuelajs.co/api/v1/\"")
+            buildConfigField("String","TERMS_URL", "\"https://policies.google.com/terms\"")
         }
         release {
             isMinifyEnabled = false
@@ -32,6 +33,7 @@ android {
             )
 
             buildConfigField("String","BASE_URL", "\"https://api.escuelajs.co/api/v1/\"")
+            buildConfigField("String","TERMS_URL", "\"https://policies.google.com/terms\"")
         }
     }
     compileOptions {

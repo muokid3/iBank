@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.dm.berxley.ibank.auth_feature.presentatation.login.LoginScreen
+import com.dm.berxley.ibank.auth_feature.presentatation.register.RegisterScreen
 import com.dm.berxley.ibank.core.presentation.home.HomeScreen
 import com.dm.berxley.ibank.ui.theme.IBankTheme
 import org.koin.androidx.compose.koinViewModel
@@ -50,6 +51,10 @@ class MainActivity : ComponentActivity() {
                         ) {
                             composable(route = Screen.LoginScreen.route) {
                                 LoginScreen(navController = navController)
+                            }
+
+                            composable(route = Screen.SignUpScreen.route) {
+                                RegisterScreen(navController = navController)
                             }
 
                         }
