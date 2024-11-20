@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.dm.berxley.ibank"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.dm.berxley.ibank"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -41,8 +41,6 @@ android {
 }
 
 dependencies {
-    val room_version = "2.6.1"
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -70,8 +68,6 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
 
     implementation(libs.coil.compose)
-
-    implementation(project.dependencies.platform("io.insert-koin:koin-bom:4.1.0"))
     implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
