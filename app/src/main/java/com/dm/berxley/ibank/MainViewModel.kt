@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class MainViewModel : ViewModel() {
 
-    private val _startDestination = MutableStateFlow("")
+    private val _startDestination = MutableStateFlow(Screen.OnboardingNavigator.route)
     val startDestination = _startDestination.asStateFlow()
 
     init {

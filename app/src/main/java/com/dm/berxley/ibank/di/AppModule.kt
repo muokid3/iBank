@@ -1,9 +1,11 @@
 package com.dm.berxley.ibank.di
 
 import com.dm.berxley.ibank.BuildConfig
+import com.dm.berxley.ibank.MainViewModel
 import com.dm.berxley.ibank.core.data.remote.BankApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,6 +25,10 @@ val appModule = module {
             .build()
             .create(BankApi::class.java)
     }
+
+
+
+    viewModelOf(::MainViewModel)
 
 
 
