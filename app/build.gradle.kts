@@ -12,6 +12,7 @@ android {
     defaultConfig {
         applicationId = "com.dm.berxley.ibank"
         minSdk = 24
+        //noinspection EditedTargetSdkVersion
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -20,12 +21,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String","BASE_URL", "\"https://api.escuelajs.co/api/v1/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
+            buildConfigField("String","BASE_URL", "\"https://api.escuelajs.co/api/v1/\"")
         }
     }
     compileOptions {
@@ -37,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -60,6 +67,8 @@ dependencies {
 
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
 
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
