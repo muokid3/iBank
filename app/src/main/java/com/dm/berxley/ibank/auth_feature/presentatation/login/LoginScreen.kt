@@ -2,11 +2,14 @@ package com.dm.berxley.ibank.auth_feature.presentatation.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,6 +25,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -42,6 +46,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -170,7 +175,7 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
                 Text(text = stringResource(R.string.forgot_password))
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = {},
@@ -181,7 +186,7 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
                 Text(text = stringResource(R.string.sign_in))
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             TextButton(
                 shape = RoundedCornerShape(8.dp),
@@ -191,10 +196,36 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
                         launchSingleTop = true
                     }
                 }) {
-                Text(text = "Don't have an account? Sign Up!")
+                Text(text = stringResource(R.string.don_t_have_an_account_sign_up))
             }
 
+            Spacer(modifier = Modifier.height(16.dp))
 
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                text = stringResource(R.string.or)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedButton(
+                onClick = {},
+                shape = RoundedCornerShape(8.dp),) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Spacer(modifier = Modifier.width(14.dp))
+                    Image(
+                        painterResource(id = R.drawable.icons8_google),
+                        contentDescription = null,
+                        modifier = Modifier.size(40.dp)
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(text = "Continue with Google")
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+            }
         }
     }
 

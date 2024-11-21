@@ -36,4 +36,6 @@
     <string name="ok">OK</string>
     <string name="you_have_successfully_changed_your_password_please_use_the_new_password_when_signing_in">You have successfully changed your password. Please use the new password when signing in.</string>
     <string name="password_change_successful">Password Change Successful</string>
+    <string name="or">- OR -</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up!</string>
 </resources>
