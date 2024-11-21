@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -87,6 +88,20 @@ dependencies {
     implementation (libs.androidx.navigation.compose)
 
     implementation (libs.androidx.datastore.preferences)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
+
+
+    implementation(libs.androidx.credentials)
+    // optional - needed for credentials support from play services, for devices running
+    // Android 13 and below.
+    implementation(libs.androidx.credentials.play.services.auth)
+
+
+
+
 
 
 
