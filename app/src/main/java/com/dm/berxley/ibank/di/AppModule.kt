@@ -1,10 +1,13 @@
 package com.dm.berxley.ibank.di
 
 import com.dm.berxley.ibank.BuildConfig
-import com.dm.berxley.ibank.MainViewModel
+import com.dm.berxley.ibank.auth_feature.presentatation.login.FirebaseAuthHelper
+import com.dm.berxley.ibank.auth_feature.presentatation.login.LoginViewModel
 import com.dm.berxley.ibank.core.data.remote.BankApi
+import com.dm.berxley.ibank.core.presentation.home.HomeViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -26,10 +29,12 @@ val appModule = module {
             .create(BankApi::class.java)
     }
 
+    single { FirebaseAuthHelper(androidContext()) }
 
 
-    viewModelOf(::MainViewModel)
 
+    viewModelOf(::LoginViewModel)
+    viewModelOf(::HomeViewModel)
 
 
 }

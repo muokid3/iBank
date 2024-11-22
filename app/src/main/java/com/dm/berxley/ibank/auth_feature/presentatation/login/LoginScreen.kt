@@ -39,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -57,7 +58,12 @@ import com.dm.berxley.ibank.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun LoginScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    state: LoginState,
+    onAction: (LoginAction) -> Unit
+) {
 
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
@@ -80,7 +86,7 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
         }
     ) { innerPadding ->
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
                 .padding(
@@ -178,7 +184,9 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(16.dp))
 
             Button(
-                onClick = {},
+                onClick = {
+                    onAction(LoginAction.EmailPasswordLogin(email = email, password = password))
+                },
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -210,8 +218,11 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedButton(
-                onClick = {},
-                shape = RoundedCornerShape(8.dp),) {
+                onClick = {
+                    onAction(LoginAction.GoogleLogin)
+                },
+                shape = RoundedCornerShape(8.dp),
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -219,10 +230,10 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
                     Image(
                         painterResource(id = R.drawable.icons8_google),
                         contentDescription = null,
-                        modifier = Modifier.size(40.dp)
+                        modifier = Modifier.size(35.dp)
                     )
                     Spacer(modifier = Modifier.weight(1f))
-                    Text(text = "Continue with Google")
+                    Text(text = stringResource(R.string.continue_with_google))
                     Spacer(modifier = Modifier.weight(1f))
                 }
             }
@@ -234,6 +245,6 @@ fun LoginScreen(navController: NavController, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun PrevLogin() {
-    LoginScreen(navController = rememberNavController())
+    LoginScreen(navController = rememberNavController(), onAction = {}, state = LoginState())
 
 }

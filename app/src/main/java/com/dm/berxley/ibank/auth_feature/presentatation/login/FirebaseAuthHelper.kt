@@ -1,18 +1,17 @@
 package com.dm.berxley.ibank.auth_feature.presentatation.login
 
 import android.content.Context
-import android.content.IntentSender
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import com.dm.berxley.ibank.R
-import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.Firebase
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.channels.awaitClose
@@ -22,13 +21,16 @@ import kotlinx.coroutines.tasks.await
 import java.security.MessageDigest
 import java.util.UUID
 
-class GoogleAuthClient(
+class FirebaseAuthHelper(
     private val context: Context,
-    private val oneTapClient: SignInClient
 ) {
-    val auth = Firebase.auth
+    private val auth = Firebase.auth
 
-    private suspend fun googleSignIn(context: Context): Flow<Result<AuthResult>> {
+    fun getCurrentUser(): FirebaseUser? {
+        return auth.currentUser
+    }
+
+    fun googleSignIn(): Flow<Result<AuthResult>> {
         val firebaseAuth = FirebaseAuth.getInstance()
         return callbackFlow {
             try {
@@ -79,4 +81,5 @@ class GoogleAuthClient(
             awaitClose { }
         }
     }
+
 }
