@@ -26,13 +26,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.dm.berxley.ibank.core.presentation.util.FirebaseAuthHelper
 import com.dm.berxley.ibank.auth_feature.presentatation.login.LoginEvent
 import com.dm.berxley.ibank.auth_feature.presentatation.login.LoginScreen
 import com.dm.berxley.ibank.auth_feature.presentatation.login.LoginViewModel
+import com.dm.berxley.ibank.auth_feature.presentatation.register.RegisterEvent
 import com.dm.berxley.ibank.auth_feature.presentatation.register.RegisterScreen
+import com.dm.berxley.ibank.auth_feature.presentatation.register.RegisterViewModel
 import com.dm.berxley.ibank.core.presentation.home.HomeScreen
 import com.dm.berxley.ibank.core.presentation.home.HomeViewModel
+import com.dm.berxley.ibank.core.presentation.util.FirebaseAuthHelper
 import com.dm.berxley.ibank.ui.theme.IBankTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -60,8 +62,7 @@ class MainActivity : ComponentActivity() {
             }
 
             IBankTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+                Scaffold(modifier = Modifier.fillMaxSize(),
                     snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                     bottomBar = {
                         if (startDestination == Screen.MainAppNavigator.route) {
@@ -120,17 +121,45 @@ class MainActivity : ComponentActivity() {
                                 }
 
 
-                                LoginScreen(
-                                    navController = navController,
+                                LoginScreen(navController = navController,
                                     state = state,
-                                    onAction = { loginAction ->
-                                        loginViewModel.onAction(loginAction)
-                                    }
-                                )
+                                    onAction = { loginViewModel.onAction(it) })
                             }
 
                             composable(route = Screen.SignUpScreen.route) {
-                                RegisterScreen(navController = navController)
+                                val viewModel = koinViewModel<RegisterViewModel>()
+                                val state by viewModel.registerState.collectAsStateWithLifecycle()
+
+                                val lifecycleOwner = LocalLifecycleOwner.current
+
+                                LaunchedEffect(lifecycleOwner) {
+                                    lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                        withContext(Dispatchers.Main.immediate) {
+                                            viewModel.events.collect { event ->
+                                                when (event) {
+                                                    is RegisterEvent.Navigate -> {
+                                                        navController.navigate(event.route) {
+                                                            popUpTo(Screen.OnboardingNavigator.route) {
+                                                                inclusive = true
+                                                            }
+                                                        }
+                                                    }
+
+                                                    is RegisterEvent.OnError -> {
+                                                        snackbarHostState.showSnackbar(
+                                                            message = event.message,
+                                                            duration = SnackbarDuration.Long
+                                                        )
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                                RegisterScreen(navController = navController,
+                                    registerState = state,
+                                    onAction = { viewModel.onAction(it) })
                             }
 
                         }
@@ -145,8 +174,7 @@ class MainActivity : ComponentActivity() {
                                 val state by homeViewModel.homeState.collectAsStateWithLifecycle()
 
                                 HomeScreen(
-                                    navController = navController,
-                                    state = state
+                                    navController = navController, state = state
                                 )
                             }
                         }

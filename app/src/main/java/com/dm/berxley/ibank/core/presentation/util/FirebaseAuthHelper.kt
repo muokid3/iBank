@@ -29,7 +29,6 @@ class FirebaseAuthHelper(
     fun getCurrentUser(): FirebaseUser? {
         return auth.currentUser
     }
-
     fun googleSignIn(): Flow<Result<AuthResult>> {
         val firebaseAuth = FirebaseAuth.getInstance()
         return callbackFlow {
@@ -81,5 +80,4 @@ class FirebaseAuthHelper(
             awaitClose { }
         }
     }
-
 }

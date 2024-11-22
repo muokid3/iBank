@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -64,7 +66,12 @@ import com.dm.berxley.ibank.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun RegisterScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    registerState: RegisterState,
+    onAction: (RegisterAction) -> Unit
+) {
 
     var name by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
@@ -72,7 +79,6 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     var passwordConfirmation by rememberSaveable { mutableStateOf("") }
     var passwordConfirmationVisible by rememberSaveable { mutableStateOf(false) }
-    var isChecked by rememberSaveable { mutableStateOf(false) }
 
     val uriHandler = LocalUriHandler.current
 
@@ -103,7 +109,7 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
         }
     ) { innerPadding ->
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(
                     top = innerPadding.calculateTopPadding(),
@@ -112,6 +118,7 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
                     end = 16.dp
                 )
                 .verticalScroll(state = rememberScrollState())
+                .imePadding()
         ) {
 
             Text(
@@ -148,8 +155,12 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Text
-                )
+                ),
+                isError = !registerState.nameError.isNullOrEmpty(),
             )
+            registerState.nameError?.let {
+                Text(text = it, color = MaterialTheme.colorScheme.error)
+            }
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -164,8 +175,12 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Email
-                )
+                ),
+                isError = !registerState.emailError.isNullOrEmpty(),
             )
+            registerState.emailError?.let {
+                Text(text = it, color = MaterialTheme.colorScheme.error)
+            }
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -200,8 +215,13 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
                     VisualTransformation.None
                 } else {
                     PasswordVisualTransformation()
-                }
+                },
+                isError = !registerState.passwordError.isNullOrEmpty(),
             )
+            registerState.passwordError?.let {
+                Text(text = it, color = MaterialTheme.colorScheme.error)
+            }
+
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -240,8 +260,12 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
                     VisualTransformation.None
                 } else {
                     PasswordVisualTransformation()
-                }
+                },
+                isError = !registerState.conformPasswordError.isNullOrEmpty(),
             )
+            registerState.conformPasswordError?.let {
+                Text(text = it, color = MaterialTheme.colorScheme.error)
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -251,9 +275,9 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Checkbox(
-                    checked = isChecked,
+                    checked = registerState.termsAccepted,
                     onCheckedChange = {
-                        isChecked = it
+                        onAction(RegisterAction.TermsToggle(it))
                     })
 
                 val annotatedString = buildAnnotatedString {
@@ -275,8 +299,25 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
                 Text(text = annotatedString)
             }
 
+            if (registerState.isLoading) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) { CircularProgressIndicator() }
+
+            }
+
             Button(
-                onClick = {},
+                onClick = {
+                    onAction(
+                        RegisterAction.Register(
+                            name = name,
+                            email = email,
+                            password = password,
+                            confirmPassword = passwordConfirmation
+                        )
+                    )
+                },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             ) {
@@ -290,7 +331,7 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally),
                 onClick = {
-                    navController.navigate(Screen.LoginScreen.route){
+                    navController.navigate(Screen.LoginScreen.route) {
                         launchSingleTop = true
                     }
                 },
@@ -307,5 +348,8 @@ fun RegisterScreen(navController: NavController, modifier: Modifier = Modifier) 
 @Preview(showBackground = true)
 @Composable
 private fun RegisterPrev() {
-    RegisterScreen(navController = rememberNavController())
+    RegisterScreen(
+        navController = rememberNavController(),
+        registerState = RegisterState(),
+        onAction = {})
 }
