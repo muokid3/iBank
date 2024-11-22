@@ -1,4 +1,4 @@
-package com.dm.berxley.ibank.auth_feature.presentatation.login
+package com.dm.berxley.ibank.core.presentation.util
 
 import android.content.Context
 import androidx.credentials.CredentialManager

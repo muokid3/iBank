@@ -26,7 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.dm.berxley.ibank.auth_feature.presentatation.login.FirebaseAuthHelper
+import com.dm.berxley.ibank.core.presentation.util.FirebaseAuthHelper
 import com.dm.berxley.ibank.auth_feature.presentatation.login.LoginEvent
 import com.dm.berxley.ibank.auth_feature.presentatation.login.LoginScreen
 import com.dm.berxley.ibank.auth_feature.presentatation.login.LoginViewModel

@@ -1,7 +1,7 @@
 package com.dm.berxley.ibank.di
 
 import com.dm.berxley.ibank.BuildConfig
-import com.dm.berxley.ibank.auth_feature.presentatation.login.FirebaseAuthHelper
+import com.dm.berxley.ibank.core.presentation.util.FirebaseAuthHelper
 import com.dm.berxley.ibank.auth_feature.presentatation.login.LoginViewModel
 import com.dm.berxley.ibank.core.data.remote.BankApi
 import com.dm.berxley.ibank.core.presentation.home.HomeViewModel
