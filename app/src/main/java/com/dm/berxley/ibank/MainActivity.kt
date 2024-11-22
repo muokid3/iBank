@@ -1,7 +1,6 @@
 package com.dm.berxley.ibank
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -94,10 +93,6 @@ class MainActivity : ComponentActivity() {
                                             loginViewModel.loginEvents.collect { event ->
                                                 when (event) {
                                                     is LoginEvent.Navigate -> {
-                                                        Log.e(
-                                                            "Event: ",
-                                                            "Event for navigation has been received"
-                                                        )
                                                         navController.navigate(event.route) {
                                                             popUpTo(Screen.OnboardingNavigator.route) {
                                                                 inclusive = true
@@ -106,13 +101,10 @@ class MainActivity : ComponentActivity() {
                                                     }
 
                                                     is LoginEvent.OnError -> {
-                                                        //show snackbar
-                                                        Log.e("Snackbar MSG: ", event.message)
                                                         snackbarHostState.showSnackbar(
                                                             message = event.message,
                                                             duration = SnackbarDuration.Long
                                                         )
-
                                                     }
                                                 }
                                             }

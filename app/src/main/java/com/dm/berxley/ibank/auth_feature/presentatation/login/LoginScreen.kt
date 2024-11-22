@@ -1,6 +1,7 @@
 package com.dm.berxley.ibank.auth_feature.presentatation.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -130,8 +132,12 @@ fun LoginScreen(
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Email
-                )
+                ),
+                isError = !state.emailError.isNullOrEmpty()
             )
+            state.emailError?.let {
+                Text(text = it, color = MaterialTheme.colorScheme.error)
+            }
 
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -166,8 +172,13 @@ fun LoginScreen(
                     VisualTransformation.None
                 } else {
                     PasswordVisualTransformation()
-                }
+                },
+                isError = !state.passwordError.isNullOrEmpty()
             )
+
+            state.passwordError?.let {
+                Text(text = it, color = MaterialTheme.colorScheme.error)
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -181,6 +192,14 @@ fun LoginScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            if (state.isLoading) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) { CircularProgressIndicator() }
+
+            }
 
             Button(
                 onClick = {
