@@ -2,7 +2,7 @@ package com.dm.berxley.ibank.auth_feature.presentatation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dm.berxley.ibank.Screen
+import com.dm.berxley.ibank.core.presentation.navigation.Screen
 import com.dm.berxley.ibank.core.presentation.util.FirebaseAuthHelper
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth

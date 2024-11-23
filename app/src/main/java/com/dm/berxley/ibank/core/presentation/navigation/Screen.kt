@@ -1,4 +1,4 @@
-package com.dm.berxley.ibank
+package com.dm.berxley.ibank.core.presentation.navigation
 
 sealed class Screen(
     val route: String
@@ -13,8 +13,8 @@ sealed class Screen(
 
     object MainAppNavigator : Screen(route = "mainAppNavigator")
     object HomeScreen : Screen(route = "homeScreen")
-    object MessagingScreen : Screen(route = "messagingScreen")
-    object SearchScreen : Screen(route = "searchScreen")
-    object SettingsScreen : Screen(route = "settingsScreen")
+    object MessagesListScreen : Screen(route = "messagesListScreen")
+    object SearchMainScreen : Screen(route = "searchMainScreen")
+    object SettingsMainScreen : Screen(route = "settingsMainScreen")
 
 }
