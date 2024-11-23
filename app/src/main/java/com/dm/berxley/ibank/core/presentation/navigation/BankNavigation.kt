@@ -23,6 +23,7 @@ import com.dm.berxley.ibank.auth_feature.presentatation.register.RegisterViewMod
 import com.dm.berxley.ibank.core.presentation.home.HomeScreen
 import com.dm.berxley.ibank.core.presentation.home.HomeViewModel
 import com.dm.berxley.ibank.core.presentation.main.MainState
+import com.dm.berxley.ibank.core.presentation.main.MainViewModel
 import com.dm.berxley.ibank.messaging_feature.presentation.message_list_screen.MessageListScreen
 import com.dm.berxley.ibank.search_feature.presentation.search_main_screen.SearchMainScreen
 import com.dm.berxley.ibank.settings_feature.presentation.settings_main_screen.SettingsMainScreen
@@ -83,14 +84,14 @@ fun BankNavigation(
             }
 
             composable(route = Screen.SignUpScreen.route) {
-                val viewModel = koinViewModel<RegisterViewModel>()
-                val state by viewModel.registerState.collectAsStateWithLifecycle()
+                val registerViewModel = koinViewModel<RegisterViewModel>()
+                val state by registerViewModel.registerState.collectAsStateWithLifecycle()
 
                 val lifecycleOwner = LocalLifecycleOwner.current
                 LaunchedEffect(lifecycleOwner) {
                     lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                         withContext(Dispatchers.Main.immediate) {
-                            viewModel.events.collect { event ->
+                            registerViewModel.events.collect { event ->
                                 when (event) {
                                     is RegisterEvent.Navigate -> {
                                         navController.navigate(event.route) {
@@ -114,7 +115,7 @@ fun BankNavigation(
                 }
                 RegisterScreen(navController = navController,
                     registerState = state,
-                    onAction = { viewModel.onAction(it) })
+                    onAction = { registerViewModel.onAction(it) })
             }
 
         }

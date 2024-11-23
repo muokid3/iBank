@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize(),
                     snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                     bottomBar = {
-                        if (state.startDestination == Screen.MainAppNavigator.route) {
+                        if (state.isLoggedIn) {
                             //show bottom bar here
                             BottomBar(mainViewModel = mainViewModel, navController = navController)
                         }
