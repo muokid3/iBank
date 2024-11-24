@@ -23,7 +23,6 @@ import com.dm.berxley.ibank.auth_feature.presentatation.register.RegisterViewMod
 import com.dm.berxley.ibank.core.presentation.home.HomeScreen
 import com.dm.berxley.ibank.core.presentation.home.HomeViewModel
 import com.dm.berxley.ibank.core.presentation.main.MainState
-import com.dm.berxley.ibank.core.presentation.main.MainViewModel
 import com.dm.berxley.ibank.messaging_feature.presentation.message_list_screen.MessageListScreen
 import com.dm.berxley.ibank.search_feature.presentation.search_main_screen.SearchMainScreen
 import com.dm.berxley.ibank.settings_feature.presentation.settings_main_screen.SettingsMainScreen
@@ -36,7 +35,7 @@ fun BankNavigation(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     mainState: MainState,
-    snackbarHostState : SnackbarHostState
+    snackbarHostState: SnackbarHostState
 ) {
     NavHost(
         navController = navController,
