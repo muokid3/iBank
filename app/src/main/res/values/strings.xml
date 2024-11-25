@@ -48,4 +48,16 @@
     <string name="are_you_sure_you_want_to_log_out_of_the_app">Are you sure you want to Log Out of the app?</string>
     <string name="confirm_logout">Confirm Logout?</string>
     <string name="settings">Settings</string>
+    <string name="amazon_platinum">Amazon Platinum</string>
+    <string name="card_number">4356 **** **** 9018</string>
+    <string name="card_processor">Card Processor</string>
+    <string name="transfer">Transfer</string>
+    <string name="account_and_card">Account and Card</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="mobile">Mobile Prepaid</string>
+    <string name="pay_bill">Pay Bills</string>
+    <string name="save">Save Online</string>
+    <string name="credit">Credit Card</string>
+    <string name="transaction">Transaction Report</string>
+    <string name="bene">Beneficiary Report</string>
 </resources>
