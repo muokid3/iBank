@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.automirrored.filled.Logout
@@ -21,8 +24,11 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,12 +37,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -85,33 +91,53 @@ fun SettingsMainScreen(
         ),
         SettingItem(stringResource(R.string.logout), Icons.Default.PowerSettingsNew, null),
     )
-    Column(
-        modifier = modifier.fillMaxSize()
-    ) {
-        if (openDialog) {
-            ShowConfirmDialog(
-                onDismissRequest = { openDialog = false },
-                onConfirmation = {
-                    openDialog = false
-                    onAction(SettingsAction.Logout)
-                },
-                dialogText = stringResource(R.string.are_you_sure_you_want_to_log_out_of_the_app),
-                dialogTitle = stringResource(R.string.confirm_logout),
-                icon = Icons.AutoMirrored.Filled.Logout
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                modifier = Modifier.fillMaxWidth(),
+                title = {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.CenterHorizontally),
+                        text = stringResource(R.string.settings)
+                    )
+                }
             )
         }
+    ) { innerPadding ->
         Column(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .verticalScroll(state = rememberScrollState())
         ) {
-            state.user?.photoUrl?.let {
+            if (openDialog) {
+                ShowConfirmDialog(
+                    onDismissRequest = { openDialog = false },
+                    onConfirmation = {
+                        openDialog = false
+                        onAction(SettingsAction.Logout)
+                    },
+                    dialogText = stringResource(R.string.are_you_sure_you_want_to_log_out_of_the_app),
+                    dialogTitle = stringResource(R.string.confirm_logout),
+                    icon = Icons.AutoMirrored.Filled.Logout
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 AsyncImage(
                     modifier = Modifier
                         .size(150.dp)
                         .clip(CircleShape),
                     model = ImageRequest
                         .Builder(context = LocalContext.current)
-                        .data(state.user.photoUrl.toString())
+                        .data(state.user?.photoUrl.toString())
                         .crossfade(true)
                         .build(),
                     placeholder = painterResource(R.drawable.profile),
@@ -119,33 +145,39 @@ fun SettingsMainScreen(
                     contentDescription = null,
                     error = painterResource(R.drawable.profile),
                     onError = { error ->
-                        Log.e("ImageLoadingError", "Error loading image: ${error.result.request.data}")
+                        Log.e(
+                            "ImageLoadingError",
+                            "Error loading image: ${error.result.request.data}"
+                        )
                     }
                 )
-            }
 
-            Spacer(modifier = Modifier.height(8.dp))
-            state.user?.displayName?.let {
-                Text(
-                    text = it,
-                    color = Color.Blue
-                )
-            }
-        }
+                Spacer(modifier = Modifier.height(8.dp))
+                state.user?.displayName?.let {
+                    Text(
+                        text = it,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold,
 
-        items.forEachIndexed { index, settingItem ->
-            SettingItemDisplay(settingItem = settingItem) {
-                if (settingItem.link != null) {
-                    onAction(SettingsAction.Navigate(settingItem.link.route))
-                } else {
-                    openDialog = true
+                        )
                 }
             }
-            if (index < items.size - 1) {
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+
+            items.forEachIndexed { index, settingItem ->
+                SettingItemDisplay(settingItem = settingItem) {
+                    if (settingItem.link != null) {
+                        onAction(SettingsAction.Navigate(settingItem.link.route))
+                    } else {
+                        openDialog = true
+                    }
+                }
+                if (index < items.size - 1) {
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                }
             }
         }
     }
+
 
 }
 

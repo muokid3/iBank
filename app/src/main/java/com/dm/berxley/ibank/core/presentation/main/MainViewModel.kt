@@ -24,7 +24,7 @@ class MainViewModel : ViewModel() {
         FirebaseAuth.getInstance().addAuthStateListener { auth ->
             if (auth.currentUser == null) {
                 _mainState.update {
-                    it.copy(startDestination = Screen.OnboardingNavigator.route, isLoggedIn = false)
+                    it.copy(startDestination = Screen.OnboardingNavigator.route, isLoggedIn = false, selectedBottomIndex = 0)
 
                 }
                 //send event to navigate
