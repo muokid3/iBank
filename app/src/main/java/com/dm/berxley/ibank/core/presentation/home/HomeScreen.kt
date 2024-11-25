@@ -166,7 +166,7 @@ fun HomeScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(230.dp)
+                        .height(210.dp)
                         .padding(horizontal = 32.dp),
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 12.dp
@@ -178,7 +178,7 @@ fun HomeScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(220.dp)
+                        .height(200.dp)
                         .padding(horizontal = 16.dp),
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 12.dp
@@ -191,7 +191,7 @@ fun HomeScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(210.dp),
+                        .height(190.dp),
                     onClick = {},
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 12.dp
