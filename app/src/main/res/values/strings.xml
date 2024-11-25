@@ -40,4 +40,11 @@
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up!</string>
     <string name="continue_with_google">Continue with Google</string>
     <string name="notifications">Notifications</string>
+    <string name="touch_id">Touch ID</string>
+    <string name="languages">Languages</string>
+    <string name="app_info">App Information</string>
+    <string name="customer_care">Customer Care</string>
+    <string name="logout">Log Out</string>
+    <string name="are_you_sure_you_want_to_log_out_of_the_app">Are you sure you want to Log Out of the app?</string>
+    <string name="confirm_logout">Confirm Logout?</string>
 </resources>

@@ -15,6 +15,13 @@ sealed class Screen(
     object HomeScreen : Screen(route = "homeScreen")
     object MessagesListScreen : Screen(route = "messagesListScreen")
     object SearchMainScreen : Screen(route = "searchMainScreen")
+
+
     object SettingsMainScreen : Screen(route = "settingsMainScreen")
+    object PasswordScreen : Screen(route = "passwordScreen")
+    object TouchIDScreen : Screen(route = "touchIDScreen")
+    object LanguagesScreen : Screen(route = "languagesScreen")
+    object AppInformationScreen : Screen(route = "appInformationScreen")
+    object CustomerCareScreen : Screen(route = "customerCareScreen")
 
 }

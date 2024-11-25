@@ -26,6 +26,7 @@ import com.dm.berxley.ibank.core.presentation.main.MainState
 import com.dm.berxley.ibank.messaging_feature.presentation.message_list_screen.MessageListScreen
 import com.dm.berxley.ibank.search_feature.presentation.search_main_screen.SearchMainScreen
 import com.dm.berxley.ibank.settings_feature.presentation.settings_main_screen.SettingsMainScreen
+import com.dm.berxley.ibank.settings_feature.presentation.settings_main_screen.SettingsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.androidx.compose.koinViewModel
@@ -146,8 +147,12 @@ fun BankNavigation(
             }
 
             composable(route = Screen.SettingsMainScreen.route) {
+                val settingsViewModel = koinViewModel<SettingsViewModel>()
+                val settingsState by settingsViewModel.settingsState.collectAsStateWithLifecycle()
                 SettingsMainScreen(
-                    navController = navController
+                    navController = navController,
+                    state = settingsState,
+                    onAction = { settingsViewModel.onAction(it) }
                 )
             }
         }

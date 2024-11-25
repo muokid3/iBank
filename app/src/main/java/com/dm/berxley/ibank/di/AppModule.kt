@@ -7,6 +7,8 @@ import com.dm.berxley.ibank.core.data.remote.BankApi
 import com.dm.berxley.ibank.core.presentation.home.HomeViewModel
 import com.dm.berxley.ibank.core.presentation.main.MainViewModel
 import com.dm.berxley.ibank.core.presentation.util.FirebaseAuthHelper
+import com.dm.berxley.ibank.settings_feature.presentation.settings_main_screen.SettingsState
+import com.dm.berxley.ibank.settings_feature.presentation.settings_main_screen.SettingsViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -39,6 +41,6 @@ val appModule = module {
     viewModelOf(::HomeViewModel)
     viewModelOf(::RegisterViewModel)
     viewModelOf(::MainViewModel)
-
+    viewModelOf(::SettingsViewModel)
 
 }
