@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -22,17 +25,23 @@ android {
     }
 
     buildTypes {
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        val apiKey = properties["CURRENCY_API_KEY"] as String
+
         debug {
+            buildConfigField("String","CURRENCY_API_KEY", apiKey)
             buildConfigField("String","BASE_URL", "\"https://api.escuelajs.co/api/v1/\"")
             buildConfigField("String","TERMS_URL", "\"https://policies.google.com/terms\"")
         }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
 
+            buildConfigField("String","CURRENCY_API_KEY", apiKey)
             buildConfigField("String","BASE_URL", "\"https://api.escuelajs.co/api/v1/\"")
             buildConfigField("String","TERMS_URL", "\"https://policies.google.com/terms\"")
         }
