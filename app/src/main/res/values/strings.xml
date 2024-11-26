@@ -60,4 +60,12 @@
     <string name="credit">Credit Card</string>
     <string name="transaction">Transaction Report</string>
     <string name="bene">Beneficiary Report</string>
+    <string name="branch">Branch</string>
+    <string name="search_for_branch">Search for Branch</string>
+    <string name="exchange_amount_of_money">Exchange amount of money</string>
+    <string name="exchange">Exchange</string>
+    <string name="search_for_exchange_rate">Search for exchange rate</string>
+    <string name="exchange_rate">Exchange rate</string>
+    <string name="search_for_interest_rate">Search for interest rate</string>
+    <string name="interest_rate">Interest rate</string>
 </resources>
