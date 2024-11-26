@@ -63,7 +63,7 @@ fun SearchMainScreen(modifier: Modifier = Modifier, navController: NavController
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentWidth(align = Alignment.CenterHorizontally),
-                        text = "Search"
+                        text = stringResource(R.string.search)
                     )
                 }
             )

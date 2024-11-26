@@ -68,4 +68,7 @@
     <string name="exchange_rate">Exchange rate</string>
     <string name="search_for_interest_rate">Search for interest rate</string>
     <string name="interest_rate">Interest rate</string>
+    <string name="messaging">Messaging</string>
+    <string name="search">Search</string>
+    <string name="compose">Compose</string>
 </resources>
