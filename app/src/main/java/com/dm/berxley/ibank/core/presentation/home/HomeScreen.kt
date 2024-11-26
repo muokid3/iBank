@@ -16,11 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Card
@@ -37,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -149,141 +149,143 @@ fun HomeScreen(
             )
         }
     ) { innerPadding ->
-        Column(
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(minSize = 100.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = modifier
                 .padding(
                     top = innerPadding.calculateTopPadding(),
                     bottom = innerPadding.calculateBottomPadding(),
-                    start = 16.dp,
-                    end = 16.dp
+                    start = 8.dp,
+                    end = 8.dp
                 )
-                .verticalScroll(state = rememberScrollState())
+                .fillMaxSize()
         ) {
 
-            Spacer(modifier = Modifier.height(16.dp))
-            Box {
+            item(
+                span = { GridItemSpan(maxLineSpan) }
+            ) { Spacer(modifier = Modifier.height(16.dp)) }
+            item(
+                span = { GridItemSpan(maxLineSpan) }
+            ) {
+                Box {
 
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(210.dp)
-                        .padding(horizontal = 32.dp),
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 12.dp
-                    ),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
-                    shape = RoundedCornerShape(10.dp)
-                ) {}
-
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .padding(horizontal = 16.dp),
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 12.dp
-                    ),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.error),
-                    shape = RoundedCornerShape(10.dp)
-                ) {}
-
-
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(190.dp),
-                    onClick = {},
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 12.dp
-                    ),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.secondary,
-                        contentColor = MaterialTheme.colorScheme.onSecondary
-                    ),
-                    shape = RoundedCornerShape(10.dp)
-
-                ) {
-
-                    Box(
+                    Card(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                Brush.horizontalGradient(
-                                    colors = listOf(
-                                        onPrimaryDark,
-                                        primaryContainerDark,
-                                        MaterialTheme.colorScheme.secondary,
-                                        MaterialTheme.colorScheme.tertiary
-                                    )
-                                )
-                            )
+                            .fillMaxWidth()
+                            .height(210.dp)
+                            .padding(horizontal = 32.dp),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 12.dp
+                        ),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
+                        shape = RoundedCornerShape(10.dp)
+                    ) {}
+
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                            .padding(horizontal = 16.dp),
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 12.dp
+                        ),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.error),
+                        shape = RoundedCornerShape(10.dp)
+                    ) {}
+
+
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(190.dp),
+                        onClick = {},
+                        elevation = CardDefaults.cardElevation(
+                            defaultElevation = 12.dp
+                        ),
+                        colors = CardDefaults.cardColors(
+                            contentColor = Color.White
+                        ),
+                        shape = RoundedCornerShape(10.dp)
+
                     ) {
 
-                        Column(
-                            modifier = Modifier.padding(16.dp)
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    Brush.horizontalGradient(
+                                        colors = listOf(
+                                            onPrimaryDark,
+                                            primaryContainerDark,
+                                            MaterialTheme.colorScheme.secondary,
+                                            MaterialTheme.colorScheme.tertiary
+                                        )
+                                    )
+                                )
                         ) {
-                            Text(
-                                text = state.name,
-                                fontSize = 24.sp
-                            )
-                            Spacer(Modifier.height(36.dp))
-                            Text(
-                                text = stringResource(R.string.amazon_platinum),
-                                fontSize = 16.sp
-                            )
-                            Spacer(Modifier.height(16.dp))
-                            Text(
-                                text = stringResource(R.string.card_number),
-                                fontSize = 20.sp
-                            )
-                            Spacer(Modifier.height(16.dp))
 
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(IntrinsicSize.Max),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
+                            Column(
+                                modifier = Modifier.padding(16.dp)
                             ) {
                                 Text(
-                                    text = "$ 123,546.34",
-                                    fontSize = 22.sp,
-                                    fontWeight = FontWeight.Bold
+                                    text = state.name,
+                                    fontSize = 24.sp
                                 )
+                                Spacer(Modifier.height(36.dp))
+                                Text(
+                                    text = stringResource(R.string.amazon_platinum),
+                                    fontSize = 16.sp
+                                )
+                                Spacer(Modifier.height(16.dp))
+                                Text(
+                                    text = stringResource(R.string.card_number),
+                                    fontSize = 20.sp
+                                )
+                                Spacer(Modifier.height(16.dp))
 
-                                Image(
+                                Row(
                                     modifier = Modifier
-                                        .height(50.dp)
-                                        .width(75.dp),
-                                    painter = painterResource(R.drawable.ic_mastercard),
-                                    contentDescription = stringResource(R.string.card_processor)
-                                )
+                                        .fillMaxWidth()
+                                        .height(IntrinsicSize.Max),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "$ 123,546.34",
+                                        fontSize = 22.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+
+                                    Image(
+                                        modifier = Modifier
+                                            .height(50.dp)
+                                            .width(75.dp),
+                                        painter = painterResource(R.drawable.ic_mastercard),
+                                        contentDescription = stringResource(R.string.card_processor)
+                                    )
+                                }
                             }
                         }
                     }
                 }
             }
+            item(
+                span = { GridItemSpan(maxLineSpan) }
+            ) { Spacer(modifier = Modifier.height(8.dp)) }
 
-            Spacer(modifier = Modifier.height(16.dp))
-//
-//            LazyHorizontalGrid(
-//                rows = GridCells.Adaptive(100.dp),
-//                contentPadding = PaddingValues(horizontal = 16.dp)
-//
-//            ) {
-//                items(homeItems.size) { index ->
-//                    val homeItem = homeItems[index]
-//                    HomeItemView(homeItem = homeItem) {
-//                        navController.navigate(homeItem.route)
-//                    }
-//                }
-//            }
+            items(homeItems.size) { index ->
+                val homeItem = homeItems[index]
+                HomeItemView(homeItem = homeItem) {
+                    navController.navigate(homeItem.route)
+                }
+            }
 
         }
     }
-
 }
-
 
 @Preview(showBackground = true)
 @Composable
