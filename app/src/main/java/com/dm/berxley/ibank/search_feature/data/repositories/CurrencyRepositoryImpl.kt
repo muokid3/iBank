@@ -44,7 +44,7 @@ class CurrencyRepositoryImpl(
             } catch (e: IOException) {
                 Log.e("IOEXCEPTION", e.message ?: "No message")
                 val errorResp = ApiErrorResponse(
-                    message = "Unable to reach server, ",
+                    message = e.message ?: "Unable to reach server, ",
                     info = "Please check your internet connection and try again later."
                 )
                 emit(Result.Error(errorResp))

@@ -24,6 +24,9 @@ import com.dm.berxley.ibank.core.presentation.home.HomeScreen
 import com.dm.berxley.ibank.core.presentation.home.HomeViewModel
 import com.dm.berxley.ibank.core.presentation.main.MainState
 import com.dm.berxley.ibank.messaging_feature.presentation.message_list_screen.MessageListScreen
+import com.dm.berxley.ibank.search_feature.presentation.search_exchange_rate.Events
+import com.dm.berxley.ibank.search_feature.presentation.search_exchange_rate.ExchangeRateScreen
+import com.dm.berxley.ibank.search_feature.presentation.search_exchange_rate.ExchangeRateViewModel
 import com.dm.berxley.ibank.search_feature.presentation.search_main_screen.SearchMainScreen
 import com.dm.berxley.ibank.settings_feature.presentation.settings_main_screen.SettingsMainScreen
 import com.dm.berxley.ibank.settings_feature.presentation.settings_main_screen.SettingsViewModel
@@ -143,6 +146,33 @@ fun BankNavigation(
             composable(route = Screen.SearchMainScreen.route) {
                 SearchMainScreen(
                     navController = navController
+                )
+            }
+
+            composable(route = Screen.ExchangeRateScreen.route) {
+                val exchangeRateViewModel = koinViewModel<ExchangeRateViewModel>()
+                val exchangeRateState = exchangeRateViewModel.state.collectAsStateWithLifecycle()
+
+                val lifecycleOwner = LocalLifecycleOwner.current
+                LaunchedEffect(lifecycleOwner.lifecycle) {
+                    lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        withContext(Dispatchers.Main.immediate) {
+                            exchangeRateViewModel.events.collect { event ->
+                                when (event) {
+                                    is Events.OnError -> {
+                                        snackbarHostState.showSnackbar(
+                                            message = event.message
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                ExchangeRateScreen(
+                    navController = navController,
+                    state = exchangeRateState.value,
+                    onAction = exchangeRateViewModel::onAction
                 )
             }
 

@@ -11,6 +11,7 @@ import com.dm.berxley.ibank.core.presentation.main.MainViewModel
 import com.dm.berxley.ibank.core.presentation.util.FirebaseAuthHelper
 import com.dm.berxley.ibank.search_feature.data.repositories.CurrencyRepositoryImpl
 import com.dm.berxley.ibank.search_feature.domain.repositories.CurrencyRepository
+import com.dm.berxley.ibank.search_feature.presentation.search_exchange_rate.ExchangeRateViewModel
 import com.dm.berxley.ibank.settings_feature.presentation.settings_main_screen.SettingsViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,7 +32,7 @@ val appModule = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl(BuildConfig.CURRENCY_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -57,5 +58,6 @@ val appModule = module {
     viewModelOf(::RegisterViewModel)
     viewModelOf(::MainViewModel)
     viewModelOf(::SettingsViewModel)
+    viewModelOf(::ExchangeRateViewModel)
 
 }

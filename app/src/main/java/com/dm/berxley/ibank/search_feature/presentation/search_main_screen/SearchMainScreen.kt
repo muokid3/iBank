@@ -21,12 +21,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dm.berxley.ibank.R
+import com.dm.berxley.ibank.core.presentation.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchMainScreen(modifier: Modifier = Modifier, navController: NavController) {
 
     val items = listOf(
+        SearchItem(
+            title = stringResource(R.string.exchange_rate),
+            description = stringResource(R.string.search_for_exchange_rate),
+            route = Screen.ExchangeRateScreen.route,
+            imageId = R.drawable.ic_exchange_rate
+        ),
         SearchItem(
             title = stringResource(R.string.branch),
             description = stringResource(R.string.search_for_branch),
@@ -38,12 +45,6 @@ fun SearchMainScreen(modifier: Modifier = Modifier, navController: NavController
             description = stringResource(R.string.search_for_interest_rate),
             route = "",
             imageId = R.drawable.ic_interest_rate
-        ),
-        SearchItem(
-            title = stringResource(R.string.exchange_rate),
-            description = stringResource(R.string.search_for_exchange_rate),
-            route = "",
-            imageId = R.drawable.ic_exchange_rate
         ),
         SearchItem(
             title = stringResource(R.string.exchange),

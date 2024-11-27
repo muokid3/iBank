@@ -14,7 +14,9 @@ sealed class Screen(
     object MainAppNavigator : Screen(route = "mainAppNavigator")
     object HomeScreen : Screen(route = "homeScreen")
     object MessagesListScreen : Screen(route = "messagesListScreen")
+
     object SearchMainScreen : Screen(route = "searchMainScreen")
+    object ExchangeRateScreen : Screen(route = "exchangeRateScreen")
 
 
     object SettingsMainScreen : Screen(route = "settingsMainScreen")

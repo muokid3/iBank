@@ -10,7 +10,16 @@ interface BankApi {
     //api calls here. GET POST etc
     @GET("currencies")
     @Headers("Content-Type: application/json")
-    suspend fun getCurrencies(@Query("apikey") apikey: String): CurrenciesDto
+    suspend fun getCurrencies(
+        @Query("apikey") apikey: String,
+    ): CurrenciesDto
+
+//    @GET("latest")
+//    @Headers("Content-Type: application/json")
+//    suspend fun getExchangeRates(
+//        @Query("apikey") apikey: String,
+//        @Query("base_currency") base_currency: String,
+//    ): CurrenciesDto
 
 
 }
