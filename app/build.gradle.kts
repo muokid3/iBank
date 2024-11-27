@@ -31,7 +31,7 @@ android {
 
         debug {
             buildConfigField("String","CURRENCY_API_KEY", apiKey)
-            buildConfigField("String","BASE_URL", "\"https://api.escuelajs.co/api/v1/\"")
+            buildConfigField("String","CURRENCY_BASE_URL", "\"https://api.freecurrencyapi.com/v1/\"")
             buildConfigField("String","TERMS_URL", "\"https://policies.google.com/terms\"")
         }
         release {
@@ -42,7 +42,7 @@ android {
             )
 
             buildConfigField("String","CURRENCY_API_KEY", apiKey)
-            buildConfigField("String","BASE_URL", "\"https://api.escuelajs.co/api/v1/\"")
+            buildConfigField("String","CURRENCY_BASE_URL", "\"https://api.freecurrencyapi.com/v1/\"")
             buildConfigField("String","TERMS_URL", "\"https://policies.google.com/terms\"")
         }
     }

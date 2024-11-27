@@ -9,11 +9,15 @@ import com.dm.berxley.ibank.core.data.remote.BankApi
 import com.dm.berxley.ibank.core.presentation.home.HomeViewModel
 import com.dm.berxley.ibank.core.presentation.main.MainViewModel
 import com.dm.berxley.ibank.core.presentation.util.FirebaseAuthHelper
+import com.dm.berxley.ibank.search_feature.data.repositories.CurrencyRepositoryImpl
+import com.dm.berxley.ibank.search_feature.domain.repositories.CurrencyRepository
 import com.dm.berxley.ibank.settings_feature.presentation.settings_main_screen.SettingsViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -44,8 +48,9 @@ val appModule = module {
             .build()
     }
     single { get<BankDatabase>().dao }
-
     single { FirebaseAuthHelper(androidContext()) }
+
+    singleOf(::CurrencyRepositoryImpl).bind<CurrencyRepository>()
 
     viewModelOf(::LoginViewModel)
     viewModelOf(::HomeViewModel)
