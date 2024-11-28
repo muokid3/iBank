@@ -72,4 +72,7 @@
     <string name="search">Search</string>
     <string name="compose">Compose</string>
     <string name="base_currency">Base Currency</string>
+    <string name="currency">CURRENCY</string>
+    <string name="buying">BUYING</string>
+    <string name="selling">SELLING</string>
 </resources>

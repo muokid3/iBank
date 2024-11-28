@@ -151,7 +151,7 @@ fun BankNavigation(
 
             composable(route = Screen.ExchangeRateScreen.route) {
                 val exchangeRateViewModel = koinViewModel<ExchangeRateViewModel>()
-                val exchangeRateState = exchangeRateViewModel.state.collectAsStateWithLifecycle()
+                val exchangeRateState by exchangeRateViewModel.state.collectAsStateWithLifecycle()
 
                 val lifecycleOwner = LocalLifecycleOwner.current
                 LaunchedEffect(lifecycleOwner.lifecycle) {
@@ -171,7 +171,7 @@ fun BankNavigation(
                 }
                 ExchangeRateScreen(
                     navController = navController,
-                    state = exchangeRateState.value,
+                    state = exchangeRateState,
                     onAction = exchangeRateViewModel::onAction
                 )
             }

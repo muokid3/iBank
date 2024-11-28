@@ -1,5 +1,6 @@
 package com.dm.berxley.ibank.search_feature.presentation.search_exchange_rate
 
+import android.icu.text.DecimalFormat
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,13 +22,13 @@ fun ItemExchangeRate(exchangeRate: ExchangeRate) {
         Text(
             modifier = Modifier.weight(0.2f),
             textAlign = TextAlign.End,
-            text = "${exchangeRate.buying_rate}"
+            text = DecimalFormat("#.##").format(exchangeRate.buying_rate)
         )
 
         Text(
             modifier = Modifier.weight(0.2f),
             textAlign = TextAlign.End,
-            text = "${exchangeRate.selling_rate}"
+            text =  DecimalFormat("#.##").format(exchangeRate.selling_rate)
         )
 
     }
