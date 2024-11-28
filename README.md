@@ -5,6 +5,8 @@ MVVM for UI.
 
 I will build the backend with node later
 
+Free Currency conveter API [[freecurrencyapi.com](https://freecurrencyapi.com/docs/)]
+
 Concepts used:
 
 1. MVVM UI architecture
