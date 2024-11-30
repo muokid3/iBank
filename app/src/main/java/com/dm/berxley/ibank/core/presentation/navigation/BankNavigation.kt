@@ -53,37 +53,7 @@ fun BankNavigation(
             startDestination = Screen.LoginScreen.route
         ) {
             composable(route = Screen.LoginScreen.route) {
-                val loginViewModel = koinViewModel<LoginViewModel>()
-                val loginState by loginViewModel.loginState.collectAsStateWithLifecycle()
-
-                val lifecycleOwner = LocalLifecycleOwner.current
-                LaunchedEffect(lifecycleOwner.lifecycle) {
-                    lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        withContext(Dispatchers.Main.immediate) {
-                            loginViewModel.loginEvents.collect { event ->
-                                when (event) {
-                                    is LoginEvent.Navigate -> {
-                                        navController.navigate(event.route) {
-                                            popUpTo(Screen.OnboardingNavigator.route) {
-                                                inclusive = true
-                                            }
-                                        }
-                                    }
-
-                                    is LoginEvent.OnError -> {
-                                        snackbarHostState.showSnackbar(
-                                            message = event.message,
-                                            duration = SnackbarDuration.Long
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                LoginScreen(navController = navController,
-                    state = loginState,
-                    onAction = { loginViewModel.onAction(it) })
+                LoginScreen(navController = navController, snackBarHostState = snackbarHostState)
             }
 
             composable(route = Screen.SignUpScreen.route) {

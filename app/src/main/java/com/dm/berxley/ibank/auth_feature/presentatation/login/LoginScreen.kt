@@ -30,10 +30,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -52,18 +55,68 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.dm.berxley.ibank.R
 import com.dm.berxley.ibank.core.presentation.navigation.Screen
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
+    loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
+    snackBarHostState: SnackbarHostState
+) {
+
+    val loginState by loginViewModel.loginState.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(lifecycleOwner.lifecycle) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            withContext(Dispatchers.Main.immediate) {
+                loginViewModel.loginEvents.collect { event ->
+                    when (event) {
+                        is LoginEvent.Navigate -> {
+                            navController.navigate(event.route) {
+                                popUpTo(Screen.OnboardingNavigator.route) {
+                                    inclusive = true
+                                }
+                            }
+                        }
+
+                        is LoginEvent.OnError -> {
+                            snackBarHostState.showSnackbar(
+                                message = event.message,
+                                duration = SnackbarDuration.Long
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    LoginScreenDetails(
+        navController,
+        modifier,
+        loginState,
+        onAction = loginViewModel::onAction)
+
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LoginScreenDetails(
+    navController: NavController,
+    modifier: Modifier = Modifier,
     state: LoginState,
-    onAction: (LoginAction) -> Unit
+    onAction: (LoginAction) -> Unit,
 ) {
 
     var email by rememberSaveable { mutableStateOf("") }
@@ -263,6 +316,6 @@ fun LoginScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PrevLogin() {
-    LoginScreen(navController = rememberNavController(), onAction = {}, state = LoginState())
+    LoginScreenDetails(navController = rememberNavController(), onAction = {}, state = LoginState())
 
 }
