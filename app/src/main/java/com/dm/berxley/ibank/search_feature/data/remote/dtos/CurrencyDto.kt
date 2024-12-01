@@ -1,7 +1,6 @@
 package com.dm.berxley.ibank.search_feature.data.remote.dtos
 
 import com.dm.berxley.ibank.core.data.local.entities.CurrencyEntity
-import com.dm.berxley.ibank.core.domain.models.Currency
 
 data class CurrencyDto(
     val code: String,
